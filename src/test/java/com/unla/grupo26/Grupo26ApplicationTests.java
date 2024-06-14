@@ -1,4 +1,4 @@
-package com.example.grupo26;
+package com.unla.grupo26;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
