@@ -10,7 +10,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Setter
 @Getter
-public class PedidoAprobado extends Stock {
+public class PedidoAprovisionamiento extends Stock {
 
     @Column(nullable = false, length=60)
     private String proveedor;
@@ -18,7 +18,7 @@ public class PedidoAprobado extends Stock {
     @Column(nullable = false)
     private int cantidadPedida;
 
-    public PedidoAprobado(String proveedor, int cantidadPedida){
+    public PedidoAprovisionamiento(String proveedor, int cantidadPedida){
         this.proveedor = proveedor;
         this.cantidadPedida = cantidadPedida;
     }
