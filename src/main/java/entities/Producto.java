@@ -34,9 +34,8 @@ public class Producto {
 	@Column(nullable = false)
 	private long codigo;
 
-	public Producto(int idProducto, String nombre, String descripcionProducto, float precio, float costo, long codigo) {
+	public Producto( String nombre, String descripcionProducto, float precio, float costo, long codigo) {
 		super();
-		this.idProducto = idProducto;
 		this.nombre = nombre;
 		this.descripcionProducto = descripcionProducto;
 		this.precio = precio;

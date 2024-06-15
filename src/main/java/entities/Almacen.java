@@ -24,7 +24,7 @@ public class Almacen extends Stock {
     private int cantidadMinima;
 
     @OneToMany(fetch= FetchType.LAZY, mappedBy="lote")
-    private Set<Lote> lotes = new HashSet<>();;
+    private Set<Lote> lotes = new HashSet<>();
 
     public Almacen(int cantidadDisponible, int cantidadMinima){
         this.cantidadDisponible = cantidadDisponible;

@@ -28,16 +28,15 @@ public class Compra {
 	private LocalDate fechaCompra;
 
 	@OneToOne(mappedBy = "compra", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	// private Detalle detalle;
+	private Detalle detalle;
 
 	@Column(nullable = false)
 	private Usuario cliente;
 
-	public Compra(int idCompra, LocalDate fechaCompra, Usuario cliente) {
+	public Compra( LocalDate fechaCompra, Detalle detalle,Usuario cliente) {
 		super();
-		this.idCompra = idCompra;
 		this.fechaCompra = fechaCompra;
-		// this.detalle = detalle;
+		this.detalle = detalle;
 		this.cliente = cliente;
 	}
 
