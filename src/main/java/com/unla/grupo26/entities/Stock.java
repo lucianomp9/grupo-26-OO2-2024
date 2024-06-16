@@ -18,7 +18,9 @@ public class Stock {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idProducto")
     private Producto producto;
-
+    
+    public Stock() {}
+    
     public Stock(Producto producto){
         this.producto = producto;
     }
