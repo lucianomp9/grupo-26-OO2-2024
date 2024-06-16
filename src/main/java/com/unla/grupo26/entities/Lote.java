@@ -1,4 +1,4 @@
-package entities;
+package com.unla.grupo26.entities;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -26,19 +26,18 @@ public class Lote {
     @Column(nullable = false)
     private float precioLote;
 
-    @Column(nullable = false, length=60)
+    @Column(nullable = false, length = 60)
     private String proveedor;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="almacen_id", nullable=false)
+    @JoinColumn(name = "almacen_id", nullable = false)
     private Almacen almacen;
 
-    public Lote(LocalDate fechaRecepcion, int cantidadRecibida, float precioLote, String proveedor, Almacen almacen){
+    public Lote(LocalDate fechaRecepcion, int cantidadRecibida, float precioLote, String proveedor, Almacen almacen) {
         this.fechaRecepcion = fechaRecepcion;
         this.cantidadRecibida = cantidadRecibida;
         this.precioLote = precioLote;
         this.proveedor = proveedor;
         this.almacen = almacen;
     }
-
 }

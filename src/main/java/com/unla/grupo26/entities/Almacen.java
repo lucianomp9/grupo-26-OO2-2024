@@ -1,4 +1,4 @@
-package entities;
+package com.unla.grupo26.entities;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -23,15 +23,15 @@ public class Almacen extends Stock {
     @Column(nullable = false)
     private int cantidadMinima;
 
-    @OneToMany(fetch= FetchType.LAZY, mappedBy="lote")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "almacen")
     private Set<Lote> lotes = new HashSet<>();
 
-    public Almacen(int cantidadDisponible, int cantidadMinima){
+    public Almacen(int cantidadDisponible, int cantidadMinima) {
         this.cantidadDisponible = cantidadDisponible;
         this.cantidadMinima = cantidadMinima;
     }
 
-    public Almacen(int cantidadDisponible, int cantidadMinima, Set<Lote> lotes){
+    public Almacen(int cantidadDisponible, int cantidadMinima, Set<Lote> lotes) {
         this.cantidadDisponible = cantidadDisponible;
         this.cantidadMinima = cantidadMinima;
         this.lotes = lotes;

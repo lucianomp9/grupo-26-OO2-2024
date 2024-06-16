@@ -1,4 +1,4 @@
-package entities;
+package com.unla.grupo26.entities;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
