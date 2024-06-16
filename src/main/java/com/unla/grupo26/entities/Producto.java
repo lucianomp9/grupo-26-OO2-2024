@@ -1,10 +1,6 @@
 package com.unla.grupo26.entities;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -34,7 +30,10 @@ public class Producto {
 	@Column(nullable = false)
 	private long codigo;
 
-	public Producto( String nombre, String descripcionProducto, float precio, float costo, long codigo) {
+	@OneToOne(mappedBy = "producto", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private Detalle detalle;
+
+	public Producto(String nombre, String descripcionProducto, float precio, float costo, long codigo) {
 		super();
 		this.nombre = nombre;
 		this.descripcionProducto = descripcionProducto;

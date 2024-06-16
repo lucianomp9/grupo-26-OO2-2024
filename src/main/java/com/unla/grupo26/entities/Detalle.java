@@ -19,13 +19,14 @@ public class Detalle {
     private int cantidad;
     @Column(nullable = false)
     private float precioCompra;
-    
+
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idCompra")
     private Compra compra;
 
-    @Column(nullable = false)
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "idProducto", nullable = false)
     private Producto producto;
 
     public Detalle(int cantidad, Compra compra, float precioCompra, Producto producto) {

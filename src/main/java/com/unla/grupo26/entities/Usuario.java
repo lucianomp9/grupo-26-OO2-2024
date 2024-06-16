@@ -1,13 +1,9 @@
 package com.unla.grupo26.entities;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.*;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class Usuario {
@@ -22,11 +18,14 @@ public class Usuario {
     @Column(nullable = false)
     private String password;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "rol_usuario_id")
-    private RolUsuario rolUsuario;
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "usuario")
+	private Set<Compra> compras = new HashSet<>();
 
-    // Constructor vacío 
+	@ManyToOne
+	@JoinColumn(name = "rolUsuario_id", nullable = false)
+	private RolUsuario rolUsuario;
+
+	// Constructor vacío
     public Usuario() {
     }
     
@@ -36,6 +35,13 @@ public class Usuario {
         this.password = password;
         this.rolUsuario = rolUsuario;
     }
+
+	public Usuario(String nombre, String password,RolUsuario rolUsuario, Set<Compra> compras) {
+		this.nombre = nombre;
+		this.password = password;
+		this.rolUsuario = rolUsuario;
+		this.compras = compras;
+	}
 
     // Getters y Setters
 

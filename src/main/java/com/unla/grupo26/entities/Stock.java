@@ -1,10 +1,7 @@
 package com.unla.grupo26.entities;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -18,11 +15,11 @@ public class Stock {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    // private Product producto;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "idProducto")
+    private Producto producto;
 
-    public Stock(int id){
-
-        // this.producto = producto;
-        this.id = id;
+    public Stock(Producto producto){
+        this.producto = producto;
     }
 }
