@@ -21,7 +21,7 @@ public class Detalle {
     private float precioCompra;
 
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "detalle", fetch = FetchType.LAZY)
     @JoinColumn(name = "idCompra")
     private Compra compra;
 
