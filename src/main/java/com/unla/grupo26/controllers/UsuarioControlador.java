@@ -1,24 +1,26 @@
 package com.unla.grupo26.controllers;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import com.unla.grupo26.dto.UsuarioDTO;
+import com.unla.grupo26.services.Impl.RolUsuarioServicio;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import com.unla.grupo26.entities.RolUsuario;
 import com.unla.grupo26.entities.Usuario;
-import com.unla.grupo26.services.UsuarioServicio;
-
-import java.util.List;
+import com.unla.grupo26.services.Impl.UsuarioServicio;
 
 @Controller
 @RequestMapping("/usuarios")
 public class UsuarioControlador {
 
-    @Autowired
     private UsuarioServicio usuarioServicio;
+    private RolUsuarioServicio rolUsuarioServicio;
+
+    public UsuarioControlador(UsuarioServicio usuarioServicio, RolUsuarioServicio rolUsuarioServicio){
+        this.usuarioServicio = usuarioServicio;
+        this.rolUsuarioServicio = rolUsuarioServicio;
+    }
+
 
     @GetMapping("/login")
     public String mostrarFormularioLogin(Model model,
@@ -36,15 +38,15 @@ public class UsuarioControlador {
 
     @GetMapping("/registro")
     public String mostrarFormularioRegistro(Model model) {
-        model.addAttribute("usuario", new Usuario());
-        model.addAttribute("roles", usuarioServicio.obtenerTodosRolUsuarios()); // obtener roles disponibles
+        model.addAttribute("usuarioDTO", new UsuarioDTO());
+        model.addAttribute("roles", rolUsuarioServicio.obtenerTodosRolUsuarios()); // obtener roles disponibles
         return "registro"; // nombre de la vista para el formulario de registro
     }
 
     @PostMapping("/registro")
-    public String registrarUsuario(@ModelAttribute("usuario") Usuario usuario) {
+    public String registrarUsuario(@ModelAttribute("usuario") UsuarioDTO usuarioDTO) throws Exception {
         // Validar y guardar el nuevo usuario en la base de datos
-        usuarioServicio.guardarOActualizar(usuario);
+        usuarioServicio.registrarUsuario(usuarioDTO);
         return "redirect:/usuarios/login"; // redireccionar al formulario de login
     }
 
@@ -64,7 +66,7 @@ public class UsuarioControlador {
         Usuario usuario = usuarioServicio.obtenerPorId(id);
         if (usuario != null) {
             model.addAttribute("usuario", usuario);
-            model.addAttribute("roles", usuarioServicio.obtenerTodosRolUsuarios()); // obtener roles disponibles
+            model.addAttribute("roles", rolUsuarioServicio.obtenerTodosRolUsuarios()); // obtener roles disponibles
             return "edicion"; // nombre de la vista para el formulario de edición de usuario
         } else {
             return "redirect:/usuarios/login"; // redireccionar al login si no se encuentra el usuario
@@ -72,10 +74,9 @@ public class UsuarioControlador {
     }
 
     @PostMapping("/editar/{id}")
-    public String editarUsuario(@PathVariable("id") int id, @ModelAttribute("usuario") Usuario usuario) {
+    public String editarUsuario(@PathVariable("id") int id, @ModelAttribute("usuarioDTO") UsuarioDTO usuarioDTO) throws Exception {
         // Validar y actualizar los datos del usuario en la base de datos
-        usuario.setIdUsuario(id); // asegurar que el ID del usuario sea el correcto
-        usuarioServicio.guardarOActualizar(usuario);
+        usuarioServicio.actualizarUsuario(usuarioDTO);
         return "redirect:/usuarios/perfil/" + id; // redireccionar al perfil del usuario editado
     }
 

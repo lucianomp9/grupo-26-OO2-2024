@@ -6,7 +6,11 @@ import org.springframework.stereotype.Repository;
 
 import com.unla.grupo26.entities.Usuario;
 
+import java.util.Optional;
+
 @Repository
-public interface IUsuarioRepositorio extends JpaRepository<Usuario, Integer> {
+public interface IUsuarioRepositorio extends JpaRepository<Usuario, Long> {
     Usuario findByNombre(String nombre);
+    public Optional<Usuario> findByUsuario(String usuario);
+    public Optional<Usuario> findByDni(int dni);
 }
