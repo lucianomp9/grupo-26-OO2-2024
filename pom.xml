@@ -62,7 +62,14 @@
 			<artifactId>mysql-connector-j</artifactId>
 			<scope>runtime</scope>
 		</dependency>
+		
+		<!-- Dependencia para realizar validaciones -->
+		<dependency>
+		    <groupId>org.springframework.boot</groupId>
+		    <artifactId>spring-boot-starter-validation</artifactId>
+		</dependency>
 
+		
 		<!-- Dependencia para realizar mapeos entre entidades -->
 		<dependency>
 			<groupId>org.mapstruct</groupId>
