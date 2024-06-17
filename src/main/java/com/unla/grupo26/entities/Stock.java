@@ -6,14 +6,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 @Entity
-@NoArgsConstructor
 @Setter
 @Getter
 public class Stock {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private long idStock;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idProducto")

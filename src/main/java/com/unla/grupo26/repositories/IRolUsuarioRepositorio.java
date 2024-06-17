@@ -8,6 +8,6 @@ import org.springframework.stereotype.Repository;
 import com.unla.grupo26.entities.RolUsuario;
 
 @Repository
-public interface IRolUsuarioRepositorio extends JpaRepository<RolUsuario, Integer> {
+public interface IRolUsuarioRepositorio extends JpaRepository<RolUsuario, Long> {
 }
 

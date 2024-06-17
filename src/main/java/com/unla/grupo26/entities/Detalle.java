@@ -13,7 +13,7 @@ public class Detalle {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idDetalle;
+    private long idDetalle;
 
     @Column(nullable = false)
     private int cantidad;
@@ -21,8 +21,8 @@ public class Detalle {
     private float precioCompra;
 
 
-    @OneToOne(mappedBy = "detalle", fetch = FetchType.LAZY)
-    @JoinColumn(name = "idCompra")
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "idCompra", nullable = false)
     private Compra compra;
 
     @OneToOne(fetch = FetchType.LAZY)

@@ -1,7 +1,10 @@
 package com.unla.grupo26.entities;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -10,12 +13,33 @@ public class Usuario {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idUsuario;
+    private long idUsuario;
+
+	@Column(nullable = false, unique = true)
+	private String usuario;
 
     @Column(nullable = false)
     private String nombre;
 
-    @Column(nullable = false)
+	@Column(nullable = false)
+	private String apellido;
+
+	@Column(nullable = false)
+	private String clave;
+
+	@Column(nullable = false, unique = true)
+	private int dni;
+
+	@Column(nullable = false)
+	private boolean activo;
+
+	@CreationTimestamp
+	private LocalDateTime fechaAlta;
+
+	@UpdateTimestamp
+	private LocalDateTime fechaActualizacion;
+
+	@Column(nullable = false)
     private String password;
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "usuario")
@@ -45,13 +69,17 @@ public class Usuario {
 
     // Getters y Setters
 
-	public int getIdUsuario() {
+	public long getIdUsuario() {
 		return idUsuario;
 	}
 
+	public String getUsuario() {
+		return usuario;
+	}
 
-	public void setIdUsuario(int idUsuario) {
-		this.idUsuario = idUsuario;
+
+	public void setUsuario(String usuario) {
+		this.usuario = usuario;
 	}
 
 
@@ -59,31 +87,39 @@ public class Usuario {
 		return nombre;
 	}
 
-
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
 
+	public String getApellido() {
+		return apellido;
+	}
+
+	public void setApellido(String apellido) {
+		this.apellido = apellido;
+	}
+
+	public int getDni() {
+		return dni;
+	}
+
+	public void setDni(int dni) {
+		this.dni = dni;
+	}
 
 	public String getPassword() {
 		return password;
 	}
 
-
 	public void setPassword(String password) {
 		this.password = password;
 	}
-
 
 	public RolUsuario getRolUsuario() {
 		return rolUsuario;
 	}
 
-
 	public void setRolUsuario(RolUsuario rolUsuario) {
 		this.rolUsuario = rolUsuario;
 	}
-
-    
-    
 }

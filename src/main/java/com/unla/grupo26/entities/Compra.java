@@ -15,12 +15,12 @@ public class Compra {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int idCompra;
+	private long idCompra;
 
 	@Column(nullable = false)
 	private LocalDate fechaCompra;
 
-	@OneToOne(mappedBy = "idCompra", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@OneToOne(mappedBy = "compra", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Detalle detalle;
 
 	@ManyToOne

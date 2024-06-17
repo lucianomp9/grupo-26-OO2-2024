@@ -15,7 +15,7 @@ public class Lote {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idLote;
+    private long idLote;
 
     @Column(nullable = false)
     private LocalDate fechaRecepcion;
