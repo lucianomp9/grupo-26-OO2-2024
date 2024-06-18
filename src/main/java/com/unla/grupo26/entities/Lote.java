@@ -33,11 +33,18 @@ public class Lote {
     @JoinColumn(name = "almacen_id", nullable = false)
     private Almacen almacen;
 
-    public Lote(LocalDate fechaRecepcion, int cantidadRecibida, float precioLote, String proveedor, Almacen almacen) {
-        this.fechaRecepcion = fechaRecepcion;
-        this.cantidadRecibida = cantidadRecibida;
-        this.precioLote = precioLote;
-        this.proveedor = proveedor;
-        this.almacen = almacen;
-    }
+    
+    public Lote(LocalDate fechaRecepcion, int cantidadRecibida, float precioLote, String proveedor) {
+		super();
+		this.fechaRecepcion = fechaRecepcion;
+		this.cantidadRecibida = cantidadRecibida;
+		this.precioLote = precioLote;
+		this.proveedor = proveedor;
+	}
+	public void setAlmacen(Almacen almacen) {
+		this.almacen = almacen;
+	}
+	
+    
+    
 }
