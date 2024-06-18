@@ -24,14 +24,14 @@ public class Compra {
 	private Detalle detalle;
 
 	@ManyToOne
-	@JoinColumn(name = "idUsuario")
-	private Usuario usuario;
+	@JoinColumn(name = "id")
+	private User user;
 
-	public Compra(LocalDate fechaCompra, Detalle detalle, Usuario usuario) {
+	public Compra(LocalDate fechaCompra, Detalle detalle, User user) {
 		super();
 		this.fechaCompra = fechaCompra;
 		this.detalle = detalle;
-		this.usuario = usuario;
+		this.user = user;
 	}
 
 }
