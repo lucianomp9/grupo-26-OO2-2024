@@ -31,7 +31,7 @@ public class User {
    private LocalDateTime fechaActualizacion;
 
    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
-   private Set<Compra> compras = new HashSet<>();
+   private Set<Sale> sales = new HashSet<>();
 
    private UserRole role;
 }

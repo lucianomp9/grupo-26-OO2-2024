@@ -11,26 +11,25 @@ import lombok.Setter;
 @NoArgsConstructor
 @Setter
 @Getter
-public class Compra {
+public class Sale {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long idCompra;
+	private long idSale;
 
 	@Column(nullable = false)
-	private LocalDate fechaCompra;
-
-	@OneToOne(mappedBy = "compra", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private Detalle detalle;
+	private LocalDate saleDate;
 
 	@ManyToOne
 	@JoinColumn(name = "id")
 	private User user;
 
-	public Compra(LocalDate fechaCompra, Detalle detalle, User user) {
+	@OneToOne(mappedBy = "sale", cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false)
+	private SaleItem saleItem;
+
+	public Sale(LocalDate saleDate, User user) {
 		super();
-		this.fechaCompra = fechaCompra;
-		this.detalle = detalle;
+		this.saleDate = saleDate;
 		this.user = user;
 	}
 
