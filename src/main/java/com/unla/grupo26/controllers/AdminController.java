@@ -46,8 +46,16 @@ public class AdminController {
         return new ResponseEntity<>(adminService.editProduct(id, productDto), HttpStatus.OK);
     }
 
-    @PostMapping("/batch/{id}")
-    public ResponseEntity<?> addBatchToStorage(@PathVariable Long id, @ModelAttribute BatchDto batchDto) throws IOException {
-        return new ResponseEntity<>(adminService.addBatchToStorage(id, batchDto), HttpStatus.OK);
+    @PostMapping("/batch/{productId}")
+    public ResponseEntity<?> addBatchToStorage(@PathVariable Long productId, @ModelAttribute BatchDto batchDto) {
+        try {
+            BatchDto addedBatch = adminService.addBatchToStorage(productId, batchDto);
+            if (addedBatch == null) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Failed to add batch");
+            }
+            return ResponseEntity.status(HttpStatus.CREATED).body(addedBatch);
+        } catch (IOException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error processing the request");
+        }
     }
 }

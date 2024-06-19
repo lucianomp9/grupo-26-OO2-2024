@@ -17,6 +17,6 @@ public interface IAdminService {
 
     public ProductDto editProduct(Long id, ProductDto productDto) throws IOException;
 
-    public StorageDto addBatchToStorage(Long id, BatchDto batchDto) throws IOException;
+    public BatchDto addBatchToStorage(Long id, BatchDto batchDto) throws IOException;
 
 }

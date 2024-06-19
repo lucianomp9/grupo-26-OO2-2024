@@ -30,4 +30,17 @@ public class Stock {
         this.availableQuantity = availableQuantity;
         this.minQuantity = minQuantity;
     }
+
+	public void setAvailableQuantity(int availableQuantity) {
+		this.availableQuantity = availableQuantity;
+	}
+
+	public int getAvailableQuantity() {
+		return availableQuantity;
+	}
+
+	
+
+    
+    
 }
