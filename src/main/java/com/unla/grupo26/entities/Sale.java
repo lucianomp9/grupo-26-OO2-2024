@@ -27,10 +27,46 @@ public class Sale {
 	@OneToOne(mappedBy = "sale", cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false)
 	private SaleItem saleItem;
 
+	public Sale() {
+        // Constructor vacío para JPA
+    }
+
 	public Sale(LocalDate saleDate, User user) {
-		super();
+        this.saleDate = saleDate;
+        this.user = user;
+    }
+
+	public long getIdSale() {
+		return idSale;
+	}
+
+	public void setIdSale(long idSale) {
+		this.idSale = idSale;
+	}
+
+	public LocalDate getSaleDate() {
+		return saleDate;
+	}
+
+	public void setSaleDate(LocalDate saleDate) {
 		this.saleDate = saleDate;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
 		this.user = user;
 	}
 
+	public SaleItem getSaleItem() {
+		return saleItem;
+	}
+
+	public void setSaleItem(SaleItem saleItem) {
+		this.saleItem = saleItem;
+	}
+
+	
 }

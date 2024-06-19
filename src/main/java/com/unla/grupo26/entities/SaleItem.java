@@ -31,4 +31,21 @@ public class SaleItem {
     private float price;
 
 
+	public void setSale(Sale sale) {
+		this.sale = sale;
+	}
+
+	public void setProduct(Product product) {
+		this.product = product;
+	}
+
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
+	}
+
+	public void setPrice(float price) {
+		this.price = price;
+	}
+
+
 }
