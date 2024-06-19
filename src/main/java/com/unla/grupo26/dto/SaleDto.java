@@ -10,15 +10,19 @@ public class SaleDto {
 	
 	private LocalDate saleDate;
     private Long userId; 
-    private List<SaleItemDto> saleItems;
+    private SaleItemDto saleItem;
 
 
 	public Long getUserId() {
 		return userId;
 	}
-	public List<SaleItemDto> getSaleItems() {
-		return saleItems;
+
+
+	public SaleItemDto getSaleItem() {
+		return saleItem;
 	}
+
+	
     
     
     

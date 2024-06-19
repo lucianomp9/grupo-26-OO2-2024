@@ -14,7 +14,6 @@ import com.unla.grupo26.entities.Stock;
 import com.unla.grupo26.entities.User;
 import com.unla.grupo26.mappers.SaleMapper;
 import com.unla.grupo26.repositories.IProductRepository;
-import com.unla.grupo26.repositories.ISaleItemRepository;
 import com.unla.grupo26.repositories.ISaleRepository;
 import com.unla.grupo26.repositories.IStockRepository;
 import com.unla.grupo26.repositories.UserRepository;
@@ -28,17 +27,15 @@ public class CustomerServiceImpl {
 	private final ISaleRepository saleRepository; 
     private final IProductRepository productRepository;
     private final IStockRepository stockRepository;
-    private final ISaleItemRepository saleItemRepository;
     private final UserRepository userRepository;
     
     @Autowired
     private SaleMapper saleMapper;
 
-    public CustomerServiceImpl(ISaleRepository saleRepository, IProductRepository productRepository, IStockRepository stockRepository, ISaleItemRepository saleItemRepository,UserRepository userRepository) {
+    public CustomerServiceImpl(ISaleRepository saleRepository, IProductRepository productRepository, IStockRepository stockRepository,UserRepository userRepository) {
         this.saleRepository = saleRepository;
         this.productRepository = productRepository;
         this.stockRepository = stockRepository;
-        this.saleItemRepository = saleItemRepository;
         this.userRepository = userRepository;
     }
 
@@ -52,33 +49,31 @@ public class CustomerServiceImpl {
         //Crear una nueva venta (Sale entity)
         Sale sale = new Sale(LocalDate.now(), user); 
 
-        //Guardar la venta en la base de datos
+     
+        //Crear un nuevo SaleItem
+        SaleItemDto saleItemDto = saleDto.getSaleItem();
+        Product product = productRepository.findById(saleItemDto.getProductId())
+                .orElseThrow(() -> new IOException("Product not found with ID: " + saleItemDto.getProductId()));
+
+        SaleItem saleItem = new SaleItem();
+        saleItem.setSale(sale);
+        saleItem.setProduct(product);
+        saleItem.setQuantity(saleItemDto.getQuantity());
+        saleItem.setPrice(saleItemDto.getPrice());
+
+        //Guardar la venta y el SaleItem en la base de datos
+        sale.setSaleItem(saleItem);
         Sale savedSale = saleRepository.save(sale);
 
-        //Procesar los items de venta
-        for (SaleItemDto saleItemDto : saleDto.getSaleItems()) {
-            Product product = productRepository.findById(saleItemDto.getProductId())
-                                                .orElseThrow(() -> new IOException("Product not found with ID: " + saleItemDto.getProductId()));
-
-            // Crear un nuevo SaleItem
-            SaleItem saleItem = new SaleItem();
-            saleItem.setSale(savedSale);
-            saleItem.setProduct(product);
-            saleItem.setQuantity(saleItemDto.getQuantity());
-            saleItem.setPrice(saleItemDto.getPrice());
-
-            // Guardar SaleItem utilizando el repositorio de SaleItem
-            saleItemRepository.save(saleItem);
-
-            // Actualizar el stock del producto
-            Stock stock = stockRepository.findByProduct(product);
-            if (stock == null || stock.getAvailableQuantity() < saleItemDto.getQuantity()) {
-                throw new IOException("Insufficient stock for product: " + product.getName());
-            }
-
-            stock.setAvailableQuantity(stock.getAvailableQuantity() - saleItemDto.getQuantity());
-            stockRepository.save(stock);
+        //Actualizar el stock del producto
+        Stock stock = stockRepository.findByProduct(product);
+        if (stock == null || stock.getAvailableQuantity() < saleItemDto.getQuantity()) {
+            throw new IOException("Insufficient stock for product: " + product.getName());
         }
+
+        stock.setAvailableQuantity(stock.getAvailableQuantity() - saleItemDto.getQuantity());
+        stockRepository.save(stock);
+        
 
         // Devolver el SaleDto de la venta generada
         return saleMapper.saleToSaleDto(savedSale); 
