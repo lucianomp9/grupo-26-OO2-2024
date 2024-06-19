@@ -1,5 +1,6 @@
 package com.unla.grupo26.configuration;
 
+
 import com.unla.grupo26.services.auth.jwt.UserService;
 import com.unla.grupo26.util.JwtUtil;
 import jakarta.servlet.FilterChain;
@@ -15,7 +16,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
-
 import java.io.IOException;
 
 @Component

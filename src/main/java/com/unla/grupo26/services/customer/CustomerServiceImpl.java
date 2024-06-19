@@ -1,7 +1,11 @@
 package com.unla.grupo26.services.customer;
 
 import java.time.LocalDate;
+import java.util.List;
 
+import com.unla.grupo26.dto.ProductDto;
+import com.unla.grupo26.mappers.ProductMapper;
+import com.unla.grupo26.repositories.IUserSQLRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,27 +20,36 @@ import com.unla.grupo26.mappers.SaleMapper;
 import com.unla.grupo26.repositories.IProductRepository;
 import com.unla.grupo26.repositories.ISaleRepository;
 import com.unla.grupo26.repositories.IStockRepository;
-import com.unla.grupo26.repositories.UserRepository;
 
 import io.jsonwebtoken.io.IOException;
 
 @Service
-public class CustomerServiceImpl {
+public class CustomerServiceImpl implements ICustomerService{
 	
     // Aca van los casos de uso que el cliente puede realizar
 	private final ISaleRepository saleRepository; 
     private final IProductRepository productRepository;
     private final IStockRepository stockRepository;
-    private final UserRepository userRepository;
+    private final IUserSQLRepository userRepository;
     
     @Autowired
     private SaleMapper saleMapper;
 
-    public CustomerServiceImpl(ISaleRepository saleRepository, IProductRepository productRepository, IStockRepository stockRepository,UserRepository userRepository) {
+    @Autowired
+    ProductMapper productMapper;
+
+    public CustomerServiceImpl(ISaleRepository saleRepository, IProductRepository productRepository, IStockRepository stockRepository, IUserSQLRepository userRepository) {
         this.saleRepository = saleRepository;
         this.productRepository = productRepository;
         this.stockRepository = stockRepository;
         this.userRepository = userRepository;
+    }
+
+    @Override
+    public List<ProductDto> getAllProducts(){
+        List<Product> products = productRepository.findAll();
+
+        return productMapper.productListToProductDTOList(products);
     }
 
     public SaleDto generateSale(SaleDto saleDto) throws IOException {

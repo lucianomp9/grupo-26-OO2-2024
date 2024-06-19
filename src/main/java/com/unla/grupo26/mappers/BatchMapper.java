@@ -13,4 +13,6 @@ import java.util.List;
 public interface BatchMapper {
         BatchDto batchToBatchDTO(Batch batch);
         Batch batchDTOToBatch(BatchDto batchDto);
+        List<BatchDto> batchListToBatchListDTO(List<Batch> batches);
+
 }

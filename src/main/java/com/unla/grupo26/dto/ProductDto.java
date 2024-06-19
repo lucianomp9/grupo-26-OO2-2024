@@ -6,17 +6,19 @@ import lombok.Data;
 @Data
 public class ProductDto {
 
+	private Long product_id;
     private String name;
-    private String productDescription;
-    private float price;
+	private float price;
+	private String description;
     private float cost;
     private String code;
-    
+
+
 	public String getName() {
 		return name;
 	}
 	public String getProductDescription() {
-		return productDescription;
+		return description;
 	}
 	public float getPrice() {
 		return price;
