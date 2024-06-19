@@ -1,0 +1,32 @@
+<div style="min-height: 80vh; background-color: gray;">
+    <h1 style="text-align: center;">Productos Disponibles</h1>
+    <div style="display: flex; align-items: center; place-content: space-around;">
+      <div class="child">
+        <div style="padding-top: 10px;">
+          <table>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Description</th>
+                <th>Cost</th>
+                <th>Code</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let product of products">
+                <td>{{product.product_id}}</td>
+                <td>{{product.name}}</td>
+                <td>{{product.price}}</td>
+                <td>{{product.description}}</td>
+                <td>{{product.cost}}</td>
+                <td>{{product.code}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  
