@@ -50,4 +50,31 @@ public class Product {
 		this.cost = cost;
 		this.code = code;
 	}
+
+	public Stock getStock() {
+		return stock;
+	}
+
+	public void setStock(Stock stock) {
+		this.stock = stock;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public void setProductDescription(String productDescription) {
+		this.productDescription = productDescription;
+	}
+
+	public void setPrice(float price) {
+		this.price = price;
+	}
+
+	public void setCost(float cost) {
+		this.cost = cost;
+	}
+	
+	
+	
 }

@@ -12,5 +12,5 @@ import java.util.List;
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
 public interface BatchMapper {
         BatchDto batchToBatchDTO(Batch batch);
-        Batch BatchDTOToBatch(BatchDto batchDto);
+        Batch batchDTOToBatch(BatchDto batchDto);
 }

@@ -49,4 +49,10 @@ public class Batch {
     public void setStorage(Storage storage) {
         this.storage = storage;
     }
+
+	public void setProduct(Product product) {
+		this.product = product;
+	}
+    
+    
 }
