@@ -2,6 +2,7 @@ package com.unla.grupo26.controllers;
 
 import com.unla.grupo26.dto.BatchDto;
 import com.unla.grupo26.dto.ProductDto;
+import com.unla.grupo26.dto.SupplyOrderDto;
 import com.unla.grupo26.services.admin.AdminServiceImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -57,5 +58,14 @@ public class AdminController {
         } catch (IOException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error processing the request");
         }
+    }
+    
+    @PostMapping("/supply")
+    public ResponseEntity<?> generateSupplyOrder(@RequestBody SupplyOrderDto supplyOrderDto) throws IOException {
+        SupplyOrderDto generatedSupplyOrder = adminService.createSupplyOrder(supplyOrderDto);
+		if (generatedSupplyOrder == null) {
+		    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Failed to generate supply order");
+		}
+		return ResponseEntity.status(HttpStatus.CREATED).body(generatedSupplyOrder);
     }
 }

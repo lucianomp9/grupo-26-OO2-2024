@@ -3,17 +3,22 @@ package com.unla.grupo26.services.admin;
 import com.unla.grupo26.dto.BatchDto;
 import com.unla.grupo26.dto.ProductDto;
 import com.unla.grupo26.dto.StorageDto;
+import com.unla.grupo26.dto.SupplyOrderDto;
 import com.unla.grupo26.entities.Batch;
 import com.unla.grupo26.entities.Product;
 import com.unla.grupo26.entities.Stock;
 import com.unla.grupo26.entities.Storage;
+import com.unla.grupo26.entities.SupplyOrder;
 import com.unla.grupo26.mappers.BatchMapper;
 import com.unla.grupo26.mappers.ProductMapper;
 import com.unla.grupo26.mappers.StorageMapper;
+import com.unla.grupo26.mappers.SupplyOrderMapper;
 import com.unla.grupo26.repositories.IBatchRepository;
 import com.unla.grupo26.repositories.IProductRepository;
 import com.unla.grupo26.repositories.IStockRepository;
 import com.unla.grupo26.repositories.IStorageRepository;
+import com.unla.grupo26.repositories.ISupplyOrderRepository;
+
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -32,9 +37,11 @@ public class AdminServiceImpl implements IAdminService{
     private final StorageMapper storageMapper;
     private final IBatchRepository batchRepository;
     private final IStockRepository stockRepository;
+    private final ISupplyOrderRepository supplyOrderRepository;
+    private final SupplyOrderMapper supplyOrderMapper;
 
     public AdminServiceImpl(IProductRepository productRepository, ProductMapper productMapper, IStorageRepository storageRepository, BatchMapper batchMapper,
-                            StorageMapper storageMapper, IBatchRepository batchRepository,IStockRepository stockRepository){
+                            StorageMapper storageMapper, IBatchRepository batchRepository,IStockRepository stockRepository, ISupplyOrderRepository supplyOrderRepository, SupplyOrderMapper supplyOrderMapper){
         this.productRepository = productRepository;
         this.productMapper = productMapper;
         this.storageRepository = storageRepository;
@@ -42,6 +49,8 @@ public class AdminServiceImpl implements IAdminService{
         this.storageMapper = storageMapper;
         this.batchRepository = batchRepository;
         this.stockRepository = stockRepository;
+		this.supplyOrderRepository = supplyOrderRepository;
+		this.supplyOrderMapper = supplyOrderMapper;
     }
 
     //Products Operations
@@ -131,5 +140,14 @@ public class AdminServiceImpl implements IAdminService{
             stock.setAvailableQuantity(stock.getAvailableQuantity() + quantityReceived);
         }
         stockRepository.save(stock);
+    }
+    
+    @Override
+    public SupplyOrderDto createSupplyOrder(SupplyOrderDto dto) throws IOException {
+        SupplyOrder supplyOrder = supplyOrderMapper.supplyOrderDTOToSupplyOrder(dto);
+
+        SupplyOrder savedSupplyOrder = supplyOrderRepository.save(supplyOrder);
+
+        return supplyOrderMapper.supplyOrderToSupplyOrderDTO(savedSupplyOrder);
     }
 }
