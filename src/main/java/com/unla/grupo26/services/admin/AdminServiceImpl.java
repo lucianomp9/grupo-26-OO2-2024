@@ -111,6 +111,12 @@ public class AdminServiceImpl implements IAdminService{
     @Override
     public ProductDto createProduct(ProductDto dto) throws IOException {
         Product product = productMapper.productDTOToProduct(dto);
+        
+        Optional<Product> productOptional = productRepository.findByCode(product.getCode());
+        
+        if(productOptional.isPresent()) {
+        	throw new IOException("Product already exists");
+        }
 
         Product savedProduct = productRepository.save(product);
 
@@ -141,6 +147,13 @@ public class AdminServiceImpl implements IAdminService{
 
         if (productOptional.isEmpty()) {
             throw new IOException("Product was not found");
+        }
+        
+        Product productCode = productMapper.productDTOToProduct(productDto);
+        Optional<Product> productOptionalCode = productRepository.findByCode(productCode.getCode());
+        
+        if(productOptionalCode.isPresent()) {
+        	throw new IOException("Product already exists");
         }
 
         Product product = productOptional.get();
