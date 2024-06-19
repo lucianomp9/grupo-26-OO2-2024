@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AdminService } from '../../admin-services/admin.service';
 import { NzMessageService } from 'ng-zorro-antd/message';
+import { catchError, of } from 'rxjs';
 
 @Component({
   selector: 'app-product-edit',
@@ -58,10 +59,17 @@ export class ProductEditComponent implements OnInit {
       formData.append('price', this.validateForm.get('price')?.value);
       formData.append('cost', this.validateForm.get('cost')?.value);
       formData.append('code', this.validateForm.get('code')?.value);
-
-      this.service.editProduct(this.productId, formData).subscribe((res) => {
-        this.message.success('Producto actualizado correctamente!', { nzDuration: 5000 });
-        this.router.navigate(['/admin/dashboard']);
+  
+      this.service.editProduct(this.productId, formData).pipe(
+        catchError(() => {
+          this.message.error('Error al actualizar el producto. Verifica que el Codigo del Producto sea unico.', { nzDuration: 5000 });
+          return of(null);
+        })
+      ).subscribe((res) => {
+        if (res) {
+          this.message.success('Producto actualizado correctamente!', { nzDuration: 5000 });
+          this.router.navigate(['/admin/dashboard']);
+        }
       });
     }
   }
