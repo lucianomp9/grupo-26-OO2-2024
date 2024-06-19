@@ -1,0 +1,217 @@
+<div style="min-height: 80vh; background-color: gray;">
+  <h1 style="text-align: center; font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif; color: white">Productos</h1>
+  <div style="display: flex; align-items: center; place-content: space-around;">
+    <div>
+      <h2>Registrar nuevo Producto</h2>
+      <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()" style="width: 150px;">
+        <div nz-row>
+          <div nz-col nzSpan="24" style="margin-top: 20px;">
+            <nz-form-item>
+              <nz-form-control nzHasFeedback [nzXs]="24" nzErrorTip="This input is Required!">
+                <input nz-input placeholder="Nombre" formControlName="name"/>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+
+          <div nz-col nzSpan="24">
+            <nz-form-item>
+              <nz-form-control nzHasFeedback [nzXs]="24" nzErrorTip="This input is Required!">
+                <input nz-input type="number" placeholder="Precio" formControlName="price"/>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+
+          <div nz-col nzSpan="24">
+            <nz-form-item>
+              <nz-form-control nzHasFeedback [nzXs]="24" nzErrorTip="This input is Required!">
+                <textarea rows="1" nz-input placeholder="Descripcion" formControlName="description"></textarea>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+
+          <div nz-col nzSpan="24">
+            <nz-form-item>
+              <nz-form-control nzHasFeedback [nzXs]="24" nzErrorTip="This input is Required!">
+                <input nz-input placeholder="Costo" formControlName="cost"/>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+
+          <div nz-col nzSpan="24">
+            <nz-form-item>
+              <nz-form-control nzHasFeedback [nzXs]="24" nzErrorTip="This input is Required!">
+                <input nz-input placeholder="Codigo de Producto" formControlName="code"/>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+        </div>
+
+        <button nz-button class="login-form-button login-form-margin" [nzType]="'primary'" [disabled]="!validateForm.valid">Crear Producto</button>
+      </form>
+    </div>
+    <div class="child">
+      <div style="padding-top: 10px;">
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Price</th>
+              <th>Description</th>
+              <th>Cost</th>
+              <th>Code</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let product of products">
+              <td>{{product.product_id}}</td>
+              <td>{{product.name}}</td>
+              <td>{{product.price}}</td>
+              <td>{{product.description}}</td>
+              <td>{{product.cost}}</td>
+              <td>{{product.code}}</td>
+              <td>
+                <button nz-button nzType="default" (click)="editProduct(product.product_id)">Edit</button>
+                <button nz-button nzType="default" (click)="deleteProduct(product.product_id)">Delete</button>
+              </td>
+              
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <hr>
+  <h1 style="text-align: center; font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif; color: white;">Almacenes</h1>
+  <div style="padding-top: 30px; padding-left: 150px; display: flex; justify-content: space-around;">
+    <div>
+      <h2>Registrar nuevo Almacen</h2>
+      <form nz-form [formGroup]="storageForm" (ngSubmit)="submitStorageForm()" style="width: 150px;">
+        <div nz-row>
+          <div nz-col nzSpan="24" style="margin-top: 20px;">
+            <nz-form-item>
+              <nz-form-control nzHasFeedback [nzXs]="24" nzErrorTip="This input is Required!">
+                <input nz-input placeholder="Location" formControlName="location"/>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+        </div>
+
+        <button nz-button class="login-form-button login-form-margin" [nzType]="'primary'" [disabled]="!storageForm.valid">Crear Almacen</button>
+      </form>
+    </div>
+    <div class="child">
+      <div style="padding-top: 10px;">
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Location</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let storage of storages">
+              <td>{{storage.id}}</td>
+              <td>{{storage.location}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <hr>
+  <h1 style="text-align: center; font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif; color: white;">Lotes</h1>
+  <div style="padding-top: 30px; padding-left: 150px; display: flex; justify-content: space-around;">
+    <div>
+      <h2>Registrar nuevo lote</h2>
+      <form nz-form [formGroup]="batchForm" (ngSubmit)="submitBatchForm()" style="width: 300px;">
+        <div nz-row>
+          
+          <div nz-col nzSpan="24" style="margin-top: 20px;">
+            <nz-form-item>
+              <nz-form-control nzHasFeedback [nzXs]="24" nzErrorTip="This input is Required!">
+                <input nz-input type="number" placeholder="ID del Producto" formControlName="productId"/>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+
+          <div nz-col nzSpan="24">
+            <nz-form-item>
+              <nz-form-control nzHasFeedback [nzXs]="24" nzErrorTip="This input is Required!">
+                <input nz-input type="date" placeholder="Fecha de recepcion" formControlName="receptionDate"/>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+
+          <div nz-col nzSpan="24">
+            <nz-form-item>
+              <nz-form-control nzHasFeedback [nzXs]="24" nzErrorTip="This input is Required!">
+                <input nz-input type="number" placeholder="Cantidad recibida" formControlName="quantityReceived"/>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+
+          <div nz-col nzSpan="24">
+            <nz-form-item>
+              <nz-form-control nzHasFeedback [nzXs]="24" nzErrorTip="This input is Required!">
+                <input nz-input type="number" placeholder="Precio del Lote" formControlName="batchPrice"/>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+
+          <div nz-col nzSpan="24">
+            <nz-form-item>
+              <nz-form-control nzHasFeedback [nzXs]="24" nzErrorTip="This input is Required!">
+                <input nz-input placeholder="Proveedor" formControlName="supplier"/>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+
+          <div nz-col nzSpan="24">
+            <nz-form-item>
+              <nz-form-control nzHasFeedback [nzXs]="24" nzErrorTip="This input is Required!">
+                <input nz-input type="number" placeholder="ID del Almacen" formControlName="storageId"/>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+
+        </div>
+
+        <button nz-button class="login-form-button login-form-margin" [nzType]="'primary'" [disabled]="!batchForm.valid">Crear Lote</button>
+      </form>
+    </div>
+    <div class="child">
+      <div style="padding-top: 10px;">
+        <table>
+          <thead>
+            <tr>
+              <th>ID Lote</th>
+              <th>ID Producto del lote</th>
+              <th>ID Almacen</th>
+              <th>Fecha de alta</th>
+              <th>Cantidad</th>
+              <th>Precio del Lote</th>
+              <th>Proveedor</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let batch of batches">
+              <td>{{ batch.batchId }}</td>
+              <td>{{ batch.productId }}</td>
+              <td>{{ batch.storageId }}</td>
+              <td>{{ batch.receptionDate }}</td>
+              <td>{{ batch.quantityReceived }}</td>
+              <td>{{ batch.batchPrice }}</td>
+              <td>{{ batch.supplier }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+ 
+</div>
+

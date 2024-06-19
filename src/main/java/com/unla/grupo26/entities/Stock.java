@@ -1,28 +1,46 @@
 package com.unla.grupo26.entities;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 @Entity
-@NoArgsConstructor
 @Setter
 @Getter
 public class Stock {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private long idStock;
 
-    // private Product producto;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "product_id", referencedColumnName = "product_id")
+    private Product product;
 
-    public Stock(int id){
+    @Column(nullable = false)
+    private int availableQuantity;
 
-        // this.producto = producto;
-        this.id = id;
+    @Column(nullable = false)
+    private int minQuantity;
+    
+    public Stock() {}
+    
+    public Stock(Product product, int availableQuantity, int minQuantity){
+        this.product = product;
+        this.availableQuantity = availableQuantity;
+        this.minQuantity = minQuantity;
     }
+
+	public void setAvailableQuantity(int availableQuantity) {
+		this.availableQuantity = availableQuantity;
+	}
+
+	public int getAvailableQuantity() {
+		return availableQuantity;
+	}
+
+	
+
+    
+    
 }
