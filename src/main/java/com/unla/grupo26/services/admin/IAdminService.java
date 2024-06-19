@@ -5,8 +5,11 @@ import com.unla.grupo26.dto.ProductDto;
 import com.unla.grupo26.dto.StorageDto;
 
 import java.io.IOException;
+import java.util.List;
 
 public interface IAdminService {
+
+    public List<ProductDto> getAllProducts();
 
     public ProductDto createProduct(ProductDto dto) throws IOException;
 

@@ -14,6 +14,7 @@ import com.unla.grupo26.repositories.IStorageRepository;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -37,6 +38,14 @@ public class AdminServiceImpl implements IAdminService{
     }
 
     //Products Operations
+
+    @Override
+    public List<ProductDto> getAllProducts(){
+        List<Product> products = productoRepository.findAll();
+
+        return productMapper.productListToProductDTOList(products);
+    }
+
     @Override
     public ProductDto createProduct(ProductDto dto) throws IOException {
         Product product = productMapper.productDTOToProduct(dto);
