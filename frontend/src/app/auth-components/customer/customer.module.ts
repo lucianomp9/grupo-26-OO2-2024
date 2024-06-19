@@ -5,16 +5,13 @@ import { DashboardComponent } from './customer-components/dashboard/dashboard.co
 import { DemoNgZorroAntdModule } from '../../DemoNgZorroAntdModule';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { ViewProductsByCategoryComponent } from './customer-components/view-products-by-category/view-products-by-category.component';
-import { PostReservationComponent } from './customer-components/post-reservation/post-reservation.component';
+
 
 
 
 @NgModule({
   declarations: [
     DashboardComponent,
-    ViewProductsByCategoryComponent,
-    PostReservationComponent,
   ],
   imports: [
     CommonModule,
