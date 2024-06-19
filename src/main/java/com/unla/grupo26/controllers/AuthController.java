@@ -6,8 +6,8 @@ import com.unla.grupo26.dto.AuthenticationResponse;
 import com.unla.grupo26.dto.SignUpRequest;
 import com.unla.grupo26.dto.UserDto;
 import com.unla.grupo26.entities.User;
-import com.unla.grupo26.repositories.UserRepository;
-import com.unla.grupo26.services.auth.AuthService;
+import com.unla.grupo26.repositories.IUserSQLRepository;
+import com.unla.grupo26.services.IAuthService;
 import com.unla.grupo26.services.auth.jwt.UserDetailsServiceImpl;
 import com.unla.grupo26.util.JwtUtil;
 import jakarta.servlet.http.HttpServletResponse;
@@ -27,31 +27,31 @@ import java.io.IOException;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/auth")
+@RequestMapping(value = "/api/auth")
 public class AuthController {
 
-    private final AuthService service;
+    private final IAuthService iAuthService;
     private final AuthenticationManager authenticationManager;
 
     private final UserDetailsServiceImpl userDetailsService;
 
-    private final UserRepository userRepository;
+    private final IUserSQLRepository userSQLRepository;
 
     private final JwtUtil jwtUtil;
 
-    public AuthController(AuthService service, AuthenticationManager authenticationManager, UserDetailsServiceImpl userDetailsService, UserRepository userRepository, JwtUtil jwtUtil) {
-        this.service = service;
+    public AuthController(IAuthService iAuthService, AuthenticationManager authenticationManager, UserDetailsServiceImpl userDetailsService, IUserSQLRepository userSQLRepository, JwtUtil jwtUtil) {
+        this.iAuthService = iAuthService;
         this.authenticationManager = authenticationManager;
         this.userDetailsService = userDetailsService;
-        this.userRepository = userRepository;
+        this.userSQLRepository = userSQLRepository;
         this.jwtUtil = jwtUtil;
     }
 
     @PostMapping(value = "/signup")
-    public ResponseEntity<?> signUpUser(@RequestBody SignUpRequest signUpRequest){
-        UserDto createdDto = service.createUser(signUpRequest);
+    public ResponseEntity<?> signUpUser(@RequestBody SignUpRequest singupRequest){
+        UserDto createdDto = iAuthService.createUser(singupRequest);
         if(createdDto == null){
-            return new ResponseEntity<>("User not created. Come again later", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("User not created. Come again later",HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<>(createdDto,HttpStatus.CREATED);
     }
@@ -69,11 +69,11 @@ public class AuthController {
         final UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getEmail());
 
         final String jwt = jwtUtil.generateToken(userDetails);
-        Optional<User> optionalUser = userRepository.findFirstByEmail(userDetails.getUsername());
+        Optional<User> optionalUser = userSQLRepository.findFirstByEmail(userDetails.getUsername());
         AuthenticationResponse authenticationResponse = new AuthenticationResponse();
         if(optionalUser.isPresent()){
             authenticationResponse.setJwt(jwt);
-            authenticationResponse.setUserRole(optionalUser.get().getRole());
+            authenticationResponse.setUserRole(optionalUser.get().getUserRole());
             authenticationResponse.setUserId(optionalUser.get().getId());
         }
         return authenticationResponse;

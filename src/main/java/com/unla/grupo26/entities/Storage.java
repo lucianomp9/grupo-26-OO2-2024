@@ -19,10 +19,13 @@ public class Storage {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long storage_id;
 
+    private String location;
+
     @OneToMany(mappedBy = "storage", fetch = FetchType.LAZY)
     private Set<Batch> batches = new HashSet<>();
 
-    public Storage(Set<Batch> batches) {
+    public Storage(Set<Batch> batches, String location) {
         this.batches = batches;
+        this.location = location;
     }
 }

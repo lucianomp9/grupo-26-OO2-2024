@@ -19,7 +19,7 @@ public class Product {
 	private String name;
 
 	@Column(nullable = false)
-	private String productDescription;
+	private String description;
 
 	@Column(nullable = false)
 	private float price;
@@ -42,10 +42,10 @@ public class Product {
 	@OneToOne(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false)
 	private Stock stock;
 
-	public Product(String name, String productDescription, float price, float cost, String code) {
+	public Product(String name, String description, float price, float cost, String code) {
 		super();
 		this.name = name;
-		this.productDescription = productDescription;
+		this.description = description;
 		this.price = price;
 		this.cost = cost;
 		this.code = code;
@@ -68,8 +68,8 @@ public class Product {
 		this.name = name;
 	}
 
-	public void setProductDescription(String productDescription) {
-		this.productDescription = productDescription;
+	public void setProductDescription(String description) {
+		this.description = description;
 	}
 
 	public void setPrice(float price) {

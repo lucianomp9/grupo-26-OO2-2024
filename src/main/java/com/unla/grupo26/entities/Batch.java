@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDate;
 
@@ -19,7 +20,7 @@ public class Batch {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long batchId;
 
-    @Column(nullable = false)
+    @CreationTimestamp
     private LocalDate receptionDate;
 
     @Column(nullable = false)
