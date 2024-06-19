@@ -54,6 +54,11 @@ public class Product {
 	public Stock getStock() {
 		return stock;
 	}
+	
+
+	public String getName() {
+		return name;
+	}
 
 	public void setStock(Stock stock) {
 		this.stock = stock;

@@ -11,7 +11,7 @@ import com.unla.grupo26.mappers.BatchMapper;
 import com.unla.grupo26.mappers.ProductMapper;
 import com.unla.grupo26.mappers.StorageMapper;
 import com.unla.grupo26.repositories.IBatchRepository;
-import com.unla.grupo26.repositories.IProductoRepository;
+import com.unla.grupo26.repositories.IProductRepository;
 import com.unla.grupo26.repositories.IStockRepository;
 import com.unla.grupo26.repositories.IStorageRepository;
 import org.springframework.stereotype.Service;
@@ -25,7 +25,7 @@ public class AdminServiceImpl implements IAdminService{
 
     //Aca van los casos de uso que el Administrador puede realizar
 
-    private final IProductoRepository productRepository;
+    private final IProductRepository productRepository;
     private final ProductMapper productMapper;
     private final IStorageRepository storageRepository;
     private final BatchMapper batchMapper;
@@ -33,7 +33,7 @@ public class AdminServiceImpl implements IAdminService{
     private final IBatchRepository batchRepository;
     private final IStockRepository stockRepository;
 
-    public AdminServiceImpl(IProductoRepository productRepository, ProductMapper productMapper, IStorageRepository storageRepository, BatchMapper batchMapper,
+    public AdminServiceImpl(IProductRepository productRepository, ProductMapper productMapper, IStorageRepository storageRepository, BatchMapper batchMapper,
                             StorageMapper storageMapper, IBatchRepository batchRepository,IStockRepository stockRepository){
         this.productRepository = productRepository;
         this.productMapper = productMapper;

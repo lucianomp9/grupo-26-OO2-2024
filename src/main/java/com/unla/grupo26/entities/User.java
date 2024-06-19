@@ -17,6 +17,7 @@ import java.util.Set;
 @Entity
 @Data
 public class User implements UserDetails {
+	
    @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    private Long id;
@@ -37,6 +38,7 @@ public class User implements UserDetails {
    private Set<Sale> sales = new HashSet<>();
 
    private UserRole role;
+   
 
    @Override
    public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -67,4 +69,10 @@ public class User implements UserDetails {
    public boolean isEnabled() {
       return false;
    }
+
+	@Override
+	public String getPassword() {
+		return null;
+	}
+   
 }
