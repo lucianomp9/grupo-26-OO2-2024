@@ -10,7 +10,8 @@ public class SaleDto {
 	
 	private LocalDate saleDate;
     private Long userId; 
-    private SaleItemDto saleItem;
+    private Long productId;
+	private int quantity;
 
 
 	public Long getUserId() {
@@ -18,12 +19,4 @@ public class SaleDto {
 	}
 
 
-	public SaleItemDto getSaleItem() {
-		return saleItem;
-	}
-
-	
-    
-    
-    
 }

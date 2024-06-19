@@ -22,6 +22,21 @@ export class CustomerService {
     })
   }
 
+
+  // Este metodo nos permite obtener las sales por usuario
+  getAllSales(): Observable<any> {
+    const userId = StorageService.getUserId();
+    const url = `http://localhost:8080/api/customer/${userId}/sale`;  // Ajusta la URL para incluir userId en el path
+    return this.http.get<[]>(url, { headers: this.createAuthorizationHeader() });
+  }
+
+  postSale(saleDto: any): Observable<any> {
+    return this.http.post<[]>(BASIC_URL + "api/customer/sale", saleDto,
+    {
+      headers: this.createAuthorizationHeader()
+    })
+  }
+
   createAuthorizationHeader(): HttpHeaders{
     let authHeader: HttpHeaders = new HttpHeaders();
     return authHeader.set("Authorization","Bearer " + StorageService.getToken());

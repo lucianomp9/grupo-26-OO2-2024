@@ -1,10 +1,12 @@
 package com.unla.grupo26.dto;
 
+import lombok.AllArgsConstructor;
+
+@AllArgsConstructor
 public class SaleItemDto {
 	//Atributos
 	private Long productId;
     private int quantity;
-    private float price;
 
     // Getters y Setters
 
@@ -24,11 +26,4 @@ public class SaleItemDto {
         this.quantity = quantity;
     }
 
-    public float getPrice() {
-        return price;
-    }
-
-    public void setPrice(float price) {
-        this.price = price;
-    }
 }

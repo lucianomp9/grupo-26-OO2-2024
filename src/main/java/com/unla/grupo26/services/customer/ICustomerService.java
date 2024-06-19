@@ -11,4 +11,8 @@ public interface ICustomerService {
     public List<ProductDto> getAllProducts();
 
     public SaleDto generateSale(SaleDto saleDto) throws IOException;
+
+    public List<SaleDto> getAllSales() throws IOException;
+
+    public List<SaleDto> getAllSalesByUserId(long userId) throws IOException;
     }

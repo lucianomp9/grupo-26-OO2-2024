@@ -3,6 +3,7 @@
     <div style="display: flex; align-items: center; place-content: space-around;">
       <div class="child">
         <div style="padding-top: 10px;">
+          <h2 style="text-align: center;">Productos Disponibles</h2>
           <table>
             <thead>
               <tr>
@@ -27,6 +28,55 @@
           </table>
         </div>
       </div>
+      <div class="child">
+        <div style="padding-top: 10px;">
+          <h2 style="text-align: center;">Mis Compras</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>Product ID</th>
+                <th>Date</th>
+                <th>Quantity</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let sale of sales">
+                <td>{{sale.productId}}</td>
+                <td>{{sale.saleDate}}</td>
+                <td>{{sale.quantity}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div style="display: flex; justify-content: center; background-color: darkgray; margin-top: 60px;">
+        <div>
+          <h1 style="text-align: center;">Comprar Producto</h1>
+          <form nz-form [formGroup]="purchaseForm" (ngSubmit)="submitPurchaseForm()" style="width: 300px;">
+        <div nz-row>
+          
+          <div nz-col nzSpan="24" style="margin-top: 20px;">
+            <nz-form-item>
+              <nz-form-control nzHasFeedback [nzXs]="24" nzErrorTip="This input is Required!">
+                <input nz-input type="number" placeholder="ID del Producto" formControlName="productId"/>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+
+          <div nz-col nzSpan="24">
+            <nz-form-item>
+              <nz-form-control nzHasFeedback [nzXs]="24" nzErrorTip="This input is Required!">
+                <input nz-input type="number" placeholder="Cantidad" formControlName="quantity"/>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+        </div>
+
+        <button nz-button class="login-form-button login-form-margin" [nzType]="'primary'" [disabled]="!purchaseForm.valid">Comprar</button>
+      </form>
+        </div>
     </div>
   </div>
   

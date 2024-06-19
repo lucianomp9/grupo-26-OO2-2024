@@ -1,9 +1,13 @@
 package com.unla.grupo26.services.customer;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import com.unla.grupo26.dto.ProductDto;
+import com.unla.grupo26.dto.StorageDto;
+import com.unla.grupo26.entities.*;
 import com.unla.grupo26.mappers.ProductMapper;
 import com.unla.grupo26.repositories.IUserSQLRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,11 +15,6 @@ import org.springframework.stereotype.Service;
 
 import com.unla.grupo26.dto.SaleDto;
 import com.unla.grupo26.dto.SaleItemDto;
-import com.unla.grupo26.entities.Product;
-import com.unla.grupo26.entities.Sale;
-import com.unla.grupo26.entities.SaleItem;
-import com.unla.grupo26.entities.Stock;
-import com.unla.grupo26.entities.User;
 import com.unla.grupo26.mappers.SaleMapper;
 import com.unla.grupo26.repositories.IProductRepository;
 import com.unla.grupo26.repositories.ISaleRepository;
@@ -64,7 +63,7 @@ public class CustomerServiceImpl implements ICustomerService{
 
      
         //Crear un nuevo SaleItem
-        SaleItemDto saleItemDto = saleDto.getSaleItem();
+        SaleItemDto saleItemDto = new SaleItemDto(saleDto.getProductId(), saleDto.getQuantity());
         Product product = productRepository.findById(saleItemDto.getProductId())
                 .orElseThrow(() -> new IOException("Product not found with ID: " + saleItemDto.getProductId()));
 
@@ -72,8 +71,7 @@ public class CustomerServiceImpl implements ICustomerService{
         saleItem.setSale(sale);
         saleItem.setProduct(product);
         saleItem.setQuantity(saleItemDto.getQuantity());
-        saleItem.setPrice(saleItemDto.getPrice());
-
+        saleItem.setPrice(saleItemDto.getQuantity() * product.getPrice());
         //Guardar la venta y el SaleItem en la base de datos
         sale.setSaleItem(saleItem);
         Sale savedSale = saleRepository.save(sale);
@@ -91,4 +89,35 @@ public class CustomerServiceImpl implements ICustomerService{
         // Devolver el SaleDto de la venta generada
         return saleMapper.saleToSaleDto(savedSale); 
     }
+
+    public List<SaleDto> getAllSales() throws IOException{
+        List<Sale> sales = saleRepository.findAll();
+        List<SaleDto> saleDtos = new ArrayList<>();
+        for(Sale s : sales){
+            SaleDto saleDto = new SaleDto();
+            saleDto.setSaleDate(s.getSaleDate());
+            saleDto.setProductId(s.getSaleItem().getProduct().getProduct_id());
+            saleDto.setQuantity(s.getSaleItem().getQuantity());
+
+            saleDtos.add(saleDto);
+        }
+        return saleDtos;
+    }
+
+    public List<SaleDto> getAllSalesByUserId(long userId) throws IOException{
+        List<Sale> sales = saleRepository.findByUser_Id(userId);
+        List<SaleDto> saleDtos = new ArrayList<>();
+
+        for(Sale s : sales){
+            SaleDto saleDto = new SaleDto();
+            saleDto.setSaleDate(s.getSaleDate());
+            saleDto.setProductId(s.getSaleItem().getProduct().getProduct_id());
+            saleDto.setQuantity(s.getSaleItem().getQuantity());
+
+            saleDtos.add(saleDto);
+        }
+        return saleDtos;
+    }
+
+
 }

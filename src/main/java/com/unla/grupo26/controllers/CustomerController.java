@@ -6,6 +6,7 @@ import com.unla.grupo26.services.customer.CustomerServiceImpl;
 
 import com.unla.grupo26.dto.ProductDto;
 import com.unla.grupo26.services.customer.CustomerServiceImpl;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -31,11 +32,21 @@ public class CustomerController {
     }
 
 	@PostMapping("/sale")
-    public ResponseEntity<?> generateSale(@RequestBody SaleDto saleDto) throws IOException {
+    public ResponseEntity<?> generateSale(@ModelAttribute SaleDto saleDto) throws IOException {
         SaleDto generatedSale = customerService.generateSale(saleDto);
 		if (generatedSale == null) {
 		    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Failed to generate sale");
 		}
 		return ResponseEntity.status(HttpStatus.CREATED).body(generatedSale);
+    }
+
+    @GetMapping("/sale")
+    public ResponseEntity<List<SaleDto>> getAllSales(){
+        return new ResponseEntity<>(customerService.getAllSales(), HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/{userId}/sale", method = RequestMethod.GET)
+    public ResponseEntity<List<SaleDto>> getAllSalesByUserId(@PathVariable long userId){
+        return new ResponseEntity<>(customerService.getAllSalesByUserId(userId), HttpStatus.OK);
     }
 }
