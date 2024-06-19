@@ -89,7 +89,7 @@ public class AdminController {
     }
     
     @PostMapping("/supply")
-    public ResponseEntity<?> generateSupplyOrder(@RequestBody SupplyOrderDto supplyOrderDto) throws IOException {
+    public ResponseEntity<?> generateSupplyOrder(@ModelAttribute SupplyOrderDto supplyOrderDto) throws IOException {
         SupplyOrderDto generatedSupplyOrder = adminService.createSupplyOrder(supplyOrderDto);
 		if (generatedSupplyOrder == null) {
 		    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Failed to generate supply order");
