@@ -29,6 +29,7 @@ public class AuthServiceImpl implements IAuthService{
             user.setEmail("admin@test.com");
             user.setPassword(new BCryptPasswordEncoder().encode("admin"));
             user.setUserRole(UserRole.ADMIN);
+            user.setActivo(true);
             userSQLRepository.save(user);
         }
     }
@@ -40,12 +41,14 @@ public class AuthServiceImpl implements IAuthService{
         user.setEmail(singupRequest.getEmail());
         user.setPassword(new BCryptPasswordEncoder().encode(singupRequest.getPassword()));
         user.setUserRole(UserRole.CUSTOMER);
+        user.setActivo(true);
         User created = userSQLRepository.save(user);
         UserDto dto = new UserDto();
         dto.setId(created.getId());
         dto.setName(created.getName());
         dto.setEmail(created.getEmail());
         dto.setUserRole(created.getUserRole());
+        user.setActivo(true);
         // UserMapper.userToDto(userSQLRepository.save(UserMapper.dtoToUser(singupRequest)));
         return dto;
     }

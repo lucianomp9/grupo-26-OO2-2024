@@ -3,6 +3,7 @@ import { AdminService } from '../../admin-services/admin.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { Router } from '@angular/router';
+import { catchError, of } from 'rxjs';
 
 @Component({
   selector: 'app-dashboard',
@@ -53,6 +54,7 @@ export class DashboardComponent implements OnInit {
     });
   }
 
+  
   submitForm() {
     if (this.validateForm.valid) {
       this.isSpinning = true;
@@ -62,12 +64,19 @@ export class DashboardComponent implements OnInit {
       formData.append('price', this.validateForm.get('price')?.value);
       formData.append('cost', this.validateForm.get('cost')?.value);
       formData.append('code', this.validateForm.get('code')?.value);
-
-      this.service.postProduct(formData).subscribe((res) => {
-        this.isSpinning = false;
-        this.message.success('Product Posted Successfully', { nzDuration: 5000 });
-        this.getAllProducts();
-        this.validateForm.reset();
+  
+      this.service.postProduct(formData).pipe(
+        catchError(() => {
+          this.message.error('Error al actualizar el producto. Verifica que el Codigo del Producto sea unico.', { nzDuration: 5000 });
+          return of(null);
+        })
+      ).subscribe((res) => {
+        if (res) {
+          this.isSpinning = false;
+          this.message.success('Product Creado Correctamente!', { nzDuration: 5000 });
+          this.getAllProducts();
+          this.validateForm.reset();
+        }
       });
     }
   }
